@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+    color:white;
+    transition:all .5s ease;
+}
+
+/* Smooth Animation */
+
+.navbar,
+.weather-card,
+.world-clock,
+.clock-box,
+input,
+button,
+.weather-img img,
+.weather-details,
+.search-form input{
+    transition:all .5s ease;
+}
+
+/* NAVBAR */
+
+.navbar{
+    width:100%;
+    height:80px;
+    padding:0 40px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+}
+
+.navbar h2{
+    font-size:30px;
+}
+
+.search-form{
+    display:flex;
+    gap:10px;
+}
+
+.search-form input{
+    width:470px;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    font-size:16px;
+}
+
+/* BUTTON */
+
+.search-form button,
+#theme-btn{
+    border:none;
+    background:#ff9800;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.search-form button:hover,
+#theme-btn:hover{
+    background:#e68900;
+}
+
+#theme-btn:hover{
+    transform:rotate(180deg);
+}
+
+/* MAIN */
+
+.main-container{
+    width:90%;
+    margin:40px auto;
+    display:flex;
+    gap:30px;
+}
+
+/* WEATHER CARD */
+
+.weather-card{
+    flex:1;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:40px;
+
+    display:flex;
+    align-items:center;
+    gap:50px;
+}
+
+.weather-card:hover{
+    transform:translateY(-5px);
+}
+
+.weather-img img{
+    width:220px;
+}
+
+.weather-img img:hover{
+    transform:scale(1.1);
+}
+
+.weather-details h2{
+    font-size:35px;
+    margin-bottom:20px;
+}
+
+.weather-details h1{
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+.weather-details p{
+    font-size:20px;
+    margin:15px 0;
+}
+
+.weather-details i{
+    width:30px;
+    color:#ffd700;
+}
+
+/* WORLD CLOCK */
+
+.world-clock{
+    width:330px;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:30px;
+}
+
+.world-clock:hover{
+    transform:translateY(-5px);
+}
+
+.world-clock h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.clock-box{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    margin-bottom:15px;
+    background:rgba(255,255,255,.1);
+    border-radius:12px;
+}
+
+.clock-box:hover{
+    transform:scale(1.03);
+}
+
+/* DARK MODE */
+
+.dark-mode{
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+}
+
+.dark-mode .navbar,
+.dark-mode .weather-card,
+.dark-mode .world-clock{
+    background:rgba(15,23,42,.8);
+    color:white;
+}
+
+.dark-mode .clock-box{
+    background:rgba(255,255,255,.08);
+}
+
+.dark-mode input{
+    background:#1e293b;
+    color:white;
+}
+
+.dark-mode input::placeholder{
+    color:#cbd5e1;
+}
+
+/* Theme Change Animation */
+
+.theme-changing{
+    animation:zoom .5s ease;
+}
+
+@keyframes zoom{
+    0%{
+        opacity:.7;
+        transform:scale(.98);
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .navbar{
+        flex-direction:column;
+        height:auto;
+        gap:20px;
+        padding:20px;
+    }
+
+    .search-form input{
+        width:220px;
+    }
+
+    .main-container{
+        flex-direction:column;
+    }
+
+    .world-clock{
+        width:100%;
+    }
+
+    .weather-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .weather-img img{
+        width:150px;
+    }
+
+    .weather-details h1{
+        font-size:50px;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <h2>
+        <i class="fas fa-cloud-sun"></i>
+        Weather App
+    </h2>
+
+    <form method="POST" class="search-form">
+        {% csrf_token %}
+        <input type="text"
+               name="city"
+               placeholder="Search City">
+
+        <button type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+
+    <button id="theme-btn">
+        <i class="fas fa-moon"></i>
+    </button>
+
+</nav>
+
+<!-- BODY -->
+
+<div class="main-container">
+
+    <!-- WEATHER -->
+
+    <div class="weather-card">
+
+        {% if weather %}
+
+        <div class="weather-img">
+            <img src="https:{{ weather.icon }}">
+        </div>
+
+        <div class="weather-details">
+
+            <h2>
+                {{ weather.city }},
+                {{ weather.country }}
+            </h2>
+
+            <h1>
+                {{ weather.temperature }}°C
+            </h1>
+
+            <p>
+                <i class="fas fa-cloud"></i>
+                {{ weather.condition }}
+            </p>
+
+            <p>
+                <i class="fas fa-droplet"></i>
+                Humidity : {{ weather.humidity }}%
+            </p>
+
+            <p>
+                <i class="fas fa-wind"></i>
+                Wind : {{ weather.wind }} km/h
+            </p>
+
+            <p>
+                <i class="fas fa-clock"></i>
+                {{ weather.time }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- CLOCK -->
+
+    <div class="world-clock">
+
+        <h2>🌍 World Clock</h2>
+
+        <div class="clock-box">
+            <span>🇮🇳 India</span>
+            <span>{{ context.india_time }}</span>
+        </div>
+
+        <div class="clock-box">
+            <span>🇺🇸 USA</span>
+            <span>{{ context.usa_time }}</span>
+        </div>
+
+        <div class="clock-box">
+            <span>🇬🇧 London</span>
+            <span>{{ context.london_time }}</span>
+        </div>
+
+        <div class="clock-box">
+            <span>🇯🇵 Japan</span>
+            <span>{{ context.japan_time }}</span>
+        </div>
+
+        <div class="clock-box">
+            <span>🇦🇺 Sydney</span>
+            <span>{{ context.sydney_time }}</span>
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+const btn = document.getElementById("theme-btn");
+
+btn.addEventListener("click", () => {
+
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+        btn.innerHTML =
+        '<i class="fas fa-sun"></i>';
+    }
+    else{
+        btn.innerHTML =
+        '<i class="fas fa-moon"></i>';
+    }
+
+});
+
+</script>
+</body>
+</html>
