@@ -103,7 +103,6 @@ Weather/
 ├── templates/
 ├── static/
 ├── manage.py
-├── requirements.txt
 └── README.md
 ```
 
