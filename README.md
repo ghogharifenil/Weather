@@ -38,15 +38,15 @@ A modern weather dashboard built with Django that provides real-time weather inf
 
 ### Home Page
 
-![Home](img/home.png)
+![Home](https://github.com/ghogharifenil/Weather/blob/main/app/static/img/home.png)
 
 ### Dark Mode
 
-![Dark Mode](img/darkpng)
+![Dark Mode](https://github.com/ghogharifenil/Weather/blob/main/app/static/img/dark.png)
 
 ### Weather Search
 
-![Search](img/lundon.png)
+![Search](https://github.com/ghogharifenil/Weather/blob/main/app/static/img/lundon.png)
 
 ---
 
