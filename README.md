@@ -55,7 +55,7 @@ A modern weather dashboard built with Django that provides real-time weather inf
 ### Clone Repository
 
 ```bash
-git clone [https://github.com/ghogharifenil/Weather.git](https://github.com/ghogharifenil/Weather)
+git clone https://github.com/ghogharifenil/Weather.git
 cd Weather
 ```
 
