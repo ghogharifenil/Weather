@@ -56,7 +56,7 @@ A modern weather dashboard built with Django that provides real-time weather inf
 
 ```bash
 git clone https://github.com/ghogharifenil/Weather.git
-cd Weather
+
 ```
 
 ### Create Virtual Environment
@@ -102,7 +102,6 @@ Weather/
 ├── weather/
 ├── templates/
 ├── static/
-├── screenshots/
 ├── manage.py
 ├── requirements.txt
 └── README.md
