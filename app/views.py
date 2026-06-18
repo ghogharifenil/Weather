@@ -12,7 +12,7 @@ def weather(request):
     if request.method == "POST":
         city = request.POST.get("city")
 
-        api_key = "257c880ca0b34837b1553707261506"
+        api_key = "youapikey"
 
         url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}"
 
